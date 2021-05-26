@@ -354,7 +354,13 @@ class CMap(object):
 
     @property
     def palette(self):
-        return self.vboxes.map(lambda x: x['color'])
+        ''' return 
+        The pixel count of each color
+        The total sum of all pixels, which will always be the same
+        The integer percentage of each color
+        '''
+        total = sum(self.vboxes.map(lambda x: x['vbox'].count))
+        return self.vboxes.map(lambda x: x['color'] + (x['vbox'].count, total, int(x['vbox'].count / float(total) * 100)))
 
     def push(self, vbox):
         self.vboxes.push({
